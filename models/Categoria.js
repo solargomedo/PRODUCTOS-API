@@ -1,12 +1,9 @@
-const Producto = require('./Producto');
-
-class Categoria{
-    constructor(id, nombre, descripcion, productos = []){
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.producto = productos;
+class Categoria {
+    constructor(id, descripcion, productos = []) {
+        this.Prop1 = id;          
+        this.Prop2 = descripcion; 
+        this.Prop3 = "Manual";    
+        this.Productos = productos;
     }
 }
-
 module.exports = Categoria;

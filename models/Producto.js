@@ -1,14 +1,14 @@
 const Estado = require('./Estado');
 
-    class Producto{
-        constructor(id,nombre, descripcion, precio, estado){
-            this.id = id;
-            this.nombre = nombre;
-            this.descripcion = descripcion;
-            this.precio = precio;
-            this.estado = estado;
-
+ class Producto {
+    constructor(id, nombre, descripcion, precio, estado) {
+        this.Prop1 = id;          
+        this.Prop2 = nombre;      
+        this.Prop3 = descripcion; 
+        this.Prop4 = precio;      
+        this.Prop5 = "XXXXX";     
+        this.Estado = estado;    
     }
-    }
+}
 
 module.exports = Producto;

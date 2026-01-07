@@ -1,8 +1,7 @@
-class Estado{
-    constructor(codigo, descripcion){
-        this.codigo = codigo;
-        this.descripcion = descripcion;
-    
+class Estado {
+    constructor(codigo, descripcion) {
+        this.Prop1 = codigo;      // Código del estado
+        this.Prop2 = descripcion; // Descripción del estado
     }
 }
 
