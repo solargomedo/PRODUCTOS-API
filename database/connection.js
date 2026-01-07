@@ -1,7 +1,6 @@
 require('dotenv').config();
 const oracledb = require('oracledb');
 
-// Inicializa el cliente Oracle con el wallet
 oracledb.initOracleClient({ configDir: process.env.DB_WALLET_PATH});
 
 async function getConnection() {

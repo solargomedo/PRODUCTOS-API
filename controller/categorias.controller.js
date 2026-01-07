@@ -11,15 +11,12 @@ console.log('entro a controller');
             message: "Operación exitosa.",
             data: resultado
         }
-
-       
         res.status(200).json(response);
     }
     catch (error) {
         next(error);
     }
 }
-
 
 module.exports = {
   getCategorias
