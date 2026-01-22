@@ -1,8 +1,12 @@
 const oracledb = require('oracledb');
 const getConnection = require('../database/connection');
+const Categoria = require('../models/Categoria');
+const Producto = require('../models/Producto');
+const Estado = require('../models/Estado');
 
 async function obtenerCategoriasDesdeSP() {
   let connection;
+  let categorias = [];
 
   try {
     connection = await getConnection();
@@ -19,23 +23,62 @@ async function obtenerCategoriasDesdeSP() {
     );
 
     const resultSet = result.outBinds.cursor;
-    const rows = await resultSet.getRows();
+    const filas = await resultSet.getRows();
 
-    console.log('ROWS CRUDAS ORACLE:', rows);
+    for (const fila of filas) {
+      const productos = await obtenerProductosPorCategoria(
+        connection,
+        fila[0]
+      );
+
+      categorias.push(
+        new Categoria(fila[0], fila[1], productos)
+      );
+    }
 
     await resultSet.close();
+    return categorias;
 
-    
-    return rows.map(row => ({
-      idCategoria: row[0],
-      descripcionCategoria: row[1]
-    }));
-
-  } catch (error) {
-    throw error;
   } finally {
     if (connection) await connection.close();
   }
+}
+
+async function obtenerProductosPorCategoria(connection, idCategoria) {
+  let productos = [];
+
+  const result = await connection.execute(
+    `
+    BEGIN
+      CAPSPG_NUCLEO_CAPACITACIONES.CAPSSP_GET_GRPJRC_BY_IDNEG_2(
+        :PI_CAPSNU_GRP_JR_CAT_ID,
+        :cursor
+      );
+    END;
+    `,
+    {
+      PI_CAPSNU_GRP_JR_CAT_ID: idCategoria,
+      cursor: { dir: oracledb.BIND_OUT, type: oracledb.CURSOR }
+    }
+  );
+
+  const rs = result.outBinds.cursor;
+  const filas = await rs.getRows();
+
+  for (const fila of filas) {
+    productos.push(
+      new Producto(
+        fila[0],
+        fila[1],
+        null,
+        null,
+        new Estado('ACT', 'Activo')
+      )
+    );
+  }
+
+  await rs.close();
+  return productos;
 }
 
 module.exports = {

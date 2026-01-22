@@ -1,7 +1,7 @@
 const categoriasService = require('../services/categorias.service');
 
 
-async function getCategorias(req, res, next) {
+async function getCategorias(_req, res, next) {
 console.log('entro a controller');
     try {
         let resultado = await categoriasService.obtenerCategorias();

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controller/categorias.controller');
-
+//ruta obtendrá todas las categorías
 /**
  * @swagger
  * /categorias:
@@ -13,4 +13,10 @@ const controller = require('../controller/categorias.controller');
  *         description: Lista de categorías
  */
 router.get('/', controller.getCategorias);
+module.exports = router;
+
+
+//RUTA obtendrá una categoría por su id
+
+
 module.exports = router;
